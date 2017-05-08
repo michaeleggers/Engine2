@@ -12,3 +12,6 @@ and thus perfectly for parallelization. However, I am fully aware of the fact th
 moment. Another topic to work on in the future. Furthermore, at the moment the program uses a variable delta time for its physics update
 as it was quite easy to get started and display something but as it gives non-deterministic behavior it is probably the most uncool thing about
 the whole program right now.
+
+
+![alt text](https://github.com/michaeleggers/Engine2/blob/master/Engine2%202016-11-29%2010-58-18-29.gif "engine in action")
