@@ -342,7 +342,7 @@ int main(int argc, char** argv) {
 			break;
 		}
 
-		//doMovement();			  // camera movement
+		doMovement();			  // camera movement
 		processCharacter(player); // update character state based on input
 		// ////////////////////////////////////////////////////////////////////////////////
 		
