@@ -10,6 +10,7 @@ This project uses a lot of OOP since at that time I bought very much into the id
 quality is questionable at best.
 
 ***Building***
+
 The project was updated to VS 2017 and will build for x86.
 
 
