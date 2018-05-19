@@ -77,7 +77,7 @@ AnimationShader::AnimationShader(const std::string& fileName, const std::vector<
 		glAttachShader(m_program, m_shaders[i]);
 	}
 
-	//// has to be done before calling glLinkProgram.
+	// has to be done before calling glLinkProgram.
 	for (auto iter = variables.begin(); iter != variables.end(); ++iter) {
 		// params: shader program, attribute location has to match vbo index, name of variable in shader
 		glBindAttribLocation(m_program, std::distance(variables.begin(), iter), (*iter).c_str());
@@ -140,12 +140,12 @@ void AnimationShader::Update(Light& light, AnimatedEntity& model, Camera& camera
 	// probably changed later: shader class should be more flexible for all the attributes...
 	glUniform3f(m_uniforms[VIEWPOS], camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 
-	glUniform1f(m_uniforms[MAT_SHININESS], 32.0f);
+	glUniform1f(m_uniforms[MAT_SHININESS], 16.0f);
 
 	glUniform3f(m_uniforms[LIGHT_POSITION], light.getPosition().x, light.getPosition().y, light.getPosition().z);
-	glUniform3f(m_uniforms[LIGHT_AMBIENT], 0.3, 0.3, 0.3);
-	glUniform3f(m_uniforms[LIGHT_DIFFUSE], 0.7f, 0.7f, 0.7f);
-	glUniform3f(m_uniforms[LIGHT_SPECULAR], 0.0f, 0.0f, 0.0f);
+	glUniform3f(m_uniforms[LIGHT_AMBIENT], 1.0, 1.0, 1.0);
+	glUniform3f(m_uniforms[LIGHT_DIFFUSE], 1.0f, 1.0f, 1.0f);
+	glUniform3f(m_uniforms[LIGHT_SPECULAR], 1.0f, 1.0f, 1.0f);
 
 	// update the interpolation for animating the md2 model
 	glUniform1f(m_uniforms[MD2_INTERPOLATION], model.getInterpol());

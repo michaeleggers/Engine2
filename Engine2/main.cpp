@@ -25,7 +25,7 @@ Course: Game Programming, COMP 4451, HKUST, Fall Term 2016
 
 #define EPSILON 0.5f;
 
-glm::vec3 camPos = glm::vec3(0.0f, 10.0f, 20.0f);
+glm::vec3 camPos = glm::vec3(0.0f, 6.0f, 10.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 camUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -220,7 +220,7 @@ int main(int argc, char** argv) {
 	AnimationShader md2Shader("./opengl_shaders/md2_animation_shader", shader_variables_md2);
 
 	/* position of the light */
-	glm::vec3 lightPos(0.0f, 25.0f, 0.0f);
+	glm::vec3 lightPos(0.0f, 5.0f, 0.0f);
 
 	/* replace light stuff with light class (no model) */
 	Light myLight(lightPos, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -292,7 +292,7 @@ int main(int argc, char** argv) {
 	//glUniform1i(glGetUniformLocation(lightMapShader.m_program, "specularSampler"), 1);
 	SDL_Event event;
 
-	/* push vertices of md2 model to gpu, dont forget to reorganize first! */
+	/* push vertices of md2 model to gpu */
 	md2.pushGPU();
 	pknight_model.pushGPU();
 	faerie_model.pushGPU();

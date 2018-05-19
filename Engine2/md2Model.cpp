@@ -106,31 +106,31 @@ void md2Model::pushGPU() {
 		int framenumber = std::distance(vertexVBOs.begin(), iter);
 		glBindBuffer(GL_ARRAY_BUFFER, *iter);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * numPoints_ro, &vertex_frames[framenumber][0], GL_DYNAMIC_DRAW);
-		glEnableVertexAttribArray(0);
+		//glEnableVertexAttribArray(0);
 	}
 
 	// VBO for the texture coordinates
 	glBindBuffer(GL_ARRAY_BUFFER, textureVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * st_ro.size(), &st_ro[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(1);
+	//glEnableVertexAttribArray(1);
 
 	// VBOs for normals
 	for (auto iter = normalVBOs.begin(); iter != normalVBOs.end(); ++iter) {
 		int framenumber = std::distance(normalVBOs.begin(), iter);
 		glBindBuffer(GL_ARRAY_BUFFER, *iter);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * (numPoints_ro / 3), &normal_frames[framenumber][0], GL_DYNAMIC_DRAW);
-		glEnableVertexAttribArray(2);
+		//glEnableVertexAttribArray(2);
 	}
 
 	// VBO for interpolated frames (vertices)
 	glBindBuffer(GL_ARRAY_BUFFER, nextVertexFrameVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * numPoints_ro, &vertex_frames[0][0], GL_DYNAMIC_DRAW); // fill the interpolated VBO with the first frame for now.
-	glEnableVertexAttribArray(3);
+	//glEnableVertexAttribArray(3);
 
 	// VBO for interpolated frames (normals)
 	glBindBuffer(GL_ARRAY_BUFFER, nextNormalFrameVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * (numPoints_ro / 3), &normal_frames[0][0], GL_DYNAMIC_DRAW); // fill the interpolated VBO with the first frame for now.
-	glEnableVertexAttribArray(4);
+	//glEnableVertexAttribArray(4);
 
 	glBindVertexArray(0);
 }

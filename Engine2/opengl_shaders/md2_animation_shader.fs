@@ -46,10 +46,10 @@ void main()
 	vec3 viewDirection = normalize(viewPos - FragPos); // vector from frag to camera
 	vec3 lightReflection = reflect(-lightDir, norm); // reflect function expects vector from light to frag
 	float spec = pow( max(dot(viewDirection, lightReflection), 0.0), material.shininess ); // last argument is shinyness
-	vec3 specular =  light.specular * (spec * vec3(texture(specularSampler, textureCoordinates))); 
+	vec3 specular =  light.specular * (spec * vec3(texture(diffuseSampler, textureCoordinates))); 
 
 	/* final fragment color */
-	vec3 result = ambient + diffuse + specular;
+	vec3 result = ambient;
     color = vec4(result, 1.0f);
 }
 

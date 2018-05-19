@@ -30,7 +30,7 @@ void main(){
 	//Normal = normal;
 	//Normal = vec3(transform * vec4(normal, 0.0f)); // w to 0 means we don't applay translate to the normal vector
 	//Normal = mat3(transpose(inverse(transform))) * normal; // not available in GLSL 140... it is slow anyway...
-	Normal = vec3(0.0f, 0.0f, -1.0f);
+	Normal = vec3(normalMatrix * interpolatedNormal);
 	FragPos = vec3(transform * vec4(interpolatedVertex, 1.0f));
 	textureCoordinates = texCoord;
 }
