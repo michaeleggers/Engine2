@@ -44,38 +44,38 @@ GLfloat deltaAnim = 0.0f;	// timer for animation
 
 bool animIsRunning = false;	// check if animation is currently running
 
-bool keys[1024];
+unsigned int keycodes[SDL_NUM_SCANCODES];
 
 // function that moves the camera
 void doMovement() {
 	// pitch
-	if (keys[SDLK_w]) {
+	if (keycodes[SDL_SCANCODE_W]) {
 		camPos += cameraFront * deltaTime * 0.005f;
 	}
-	if (keys[SDLK_s]) {
+	if (keycodes[SDL_SCANCODE_S]) {
 		camPos -= cameraFront * deltaTime * 0.005f;
 	}
-	if (keys[SDLK_a]) {
+	if (keycodes[SDL_SCANCODE_A]) {
 		camPos -= glm::normalize(glm::cross(cameraFront, camUp)) * deltaTime * 0.005f;
 	}
-	if (keys[SDLK_d]) {
+	if (keycodes[SDL_SCANCODE_D]) {
 		camPos += glm::normalize(glm::cross(cameraFront, camUp)) * deltaTime * 0.005f;
 	}
-	if (keys[SDLK_i]) {
+	if (keycodes[SDL_SCANCODE_I]) {
 		pitch += 0.05f * deltaTime;
 		if (pitch > 89.0f)
 			pitch = 89.0f;
 	}
-	if (keys[SDLK_k]) {
+	if (keycodes[SDL_SCANCODE_K]) {
 		pitch -= 0.05f * deltaTime;
 		if (pitch < -89.0f)
 			pitch = -89.0f;
 	}
 	// yaw
-	if (keys[SDLK_j]) {
+	if (keycodes[SDL_SCANCODE_J]) {
 		yaw -= 0.05f * deltaTime;
 	}
-	if (keys[SDLK_l]) {
+	if (keycodes[SDL_SCANCODE_L]) {
 		yaw += 0.05f * deltaTime;
 	}
 
@@ -89,27 +89,27 @@ void processCharacter(Character& character) {
 	bool keyHit = false;
 	glm::vec3 newDirection(0.0f, 0.0f, 0.0f);
 
-	if (keys[SDLK_h]) {							// right
+	if (keycodes[SDL_SCANCODE_H]) {							// right
 		character.setAnimationState(RUN);
 		newDirection += glm::vec3(1.0f, 0.0f, 0.0f);
 		keyHit = true;
 	}
-	if (keys[SDLK_f]) {							// left
+	if (keycodes[SDL_SCANCODE_F]) {							// left
 		character.setAnimationState(RUN);
 		newDirection += glm::vec3(-1.0f, 0.0f, 0.0f);
 		keyHit = true;
 	}
-	if (keys[SDLK_t]) {							// forward
+	if (keycodes[SDL_SCANCODE_T]) {							// forward
 		character.setAnimationState(RUN);
 		newDirection += glm::vec3(0.0f, 0.0f, -1.0f);
 		keyHit = true;
 	}
-	if (keys[SDLK_g]) {							// backwards
+	if (keycodes[SDL_SCANCODE_G]) {							// backwards
 		character.setAnimationState(RUN);
 		newDirection += glm::vec3(0.0f, 0.0f, 1.0f);
 		keyHit = true;
 	}
-	if (keys[SDLK_SPACE]) {
+	if (keycodes[SDL_SCANCODE_SPACE]) {
 		character.setAnimationState(ATTACK);
 		newDirection = character.getDirection();
 		keyHit = true;
@@ -290,7 +290,7 @@ int main(int argc, char** argv) {
 	//lightMapShader.Bind();
 	//glUniform1i(glGetUniformLocation(lightMapShader.m_program, "diffuseSampler"), 0);
 	//glUniform1i(glGetUniformLocation(lightMapShader.m_program, "specularSampler"), 1);
-	SDL_Event e;
+	SDL_Event event;
 
 	/* push vertices of md2 model to gpu, dont forget to reorganize first! */
 	md2.pushGPU();
@@ -328,18 +328,16 @@ int main(int argc, char** argv) {
 		// INPUT ////////////////////////////////////////////////////////////////////////
 		// SDL2 version of input handling: 
 		// SDL_PollEvent is for polling. SDL_WaitEvent will halt the program here!
-		SDL_PollEvent(&e);
-		switch (e.type)
+		while (SDL_PollEvent(&event) != 0) 
 		{
-		case SDL_QUIT:
-			isClosed = true;
-			break;
-		case SDL_KEYDOWN:
-			keys[e.key.keysym.sym] = true;
-			break;
-		case SDL_KEYUP:
-			keys[e.key.keysym.sym] = false;
-			break;
+			if (event.type == SDL_QUIT)
+				isClosed = true;
+			if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+				isClosed = true;
+			if (event.type == SDL_KEYDOWN)
+				keycodes[event.key.keysym.scancode] = 1;
+			if (event.type == SDL_KEYUP)
+				keycodes[event.key.keysym.scancode] = 0;
 		}
 
 		doMovement();			  // camera movement
