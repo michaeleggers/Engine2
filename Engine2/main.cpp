@@ -193,7 +193,7 @@ void computeAI(Character& character, Character& player) {
 
 
 int main(int argc, char** argv) {
-	Display display(1024, 768, "opengl renderer: model_test, GLSL ver. 140, glversion 3.1.0");
+	Display display(1024, 768, "Engine2");
 
 	std::vector<std::string> shader_variables = { "tposition", "texCoord", "normal" };
 	std::vector<std::string> shader_variables_md2 = { "tposition", "texCoord", "normal", "nextVertexFrame", "nextNormalFrame" };
