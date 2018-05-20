@@ -61,6 +61,8 @@ void md2Model::reorganize() {
 			glm::vec3 x = model.pointList[framenumber * model.numPoints + model.triIndex[j].meshIndex[1]] - model.pointList[framenumber * model.numPoints + model.triIndex[j].meshIndex[0]];
 			glm::vec3 y = model.pointList[framenumber * model.numPoints + model.triIndex[j].meshIndex[2]] - model.pointList[framenumber * model.numPoints + model.triIndex[j].meshIndex[0]];
 			normal_frame.push_back(glm::normalize(glm::cross(x, y)));
+			normal_frame.push_back(glm::normalize(glm::cross(x, y)));
+			normal_frame.push_back(glm::normalize(glm::cross(x, y)));
 
 			if (!textures_reordered) { // only needs to be done once, as every frame uses the same
 				st_ro.push_back(model.st[model.triIndex[j].stIndex[0]]); // coordinate tuple for 1st point of triangle
@@ -118,7 +120,7 @@ void md2Model::pushGPU() {
 	for (auto iter = normalVBOs.begin(); iter != normalVBOs.end(); ++iter) {
 		int framenumber = std::distance(normalVBOs.begin(), iter);
 		glBindBuffer(GL_ARRAY_BUFFER, *iter);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * (numPoints_ro / 3), &normal_frames[framenumber][0], GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * numPoints_ro, &normal_frames[framenumber][0], GL_DYNAMIC_DRAW);
 		//glEnableVertexAttribArray(2);
 	}
 
@@ -129,7 +131,7 @@ void md2Model::pushGPU() {
 
 	// VBO for interpolated frames (normals)
 	glBindBuffer(GL_ARRAY_BUFFER, nextNormalFrameVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * (numPoints_ro / 3), &normal_frames[0][0], GL_DYNAMIC_DRAW); // fill the interpolated VBO with the first frame for now.
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * numPoints_ro, &normal_frames[0][0], GL_DYNAMIC_DRAW); // fill the interpolated VBO with the first frame for now.
 	//glEnableVertexAttribArray(4);
 
 	glBindVertexArray(0);

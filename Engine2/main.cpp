@@ -206,6 +206,7 @@ int main(int argc, char** argv) {
 	Texture pknight_weapon_texture("./models/pknight/w_railgun.pcx");
 	Texture goblin_texture("./models/goblin/cathos.pcx");
 	Texture goblin_weapon_texture("./models/goblin/weapon.pcx");
+	Texture container_texture("./textures/container2.png");
 
 	/* creates a shader for objects that will be affected by a light */
 	AnimationShader lightShader("./opengl_shaders/lightTutorialShader", shader_variables);
@@ -235,6 +236,7 @@ int main(int argc, char** argv) {
 	md2Model pknight_weapon_model("./models/pknight/w_railgun.md2");
 	md2Model goblin_model("./models/goblin/tris.md2");
 	md2Model goblin_weapon_model("./models/goblin/weapon.md2");
+	md2Model cube_model("./models/cube.md2");
 
 
 	/* create a REntity, the final representation of any renderable object in the game */
@@ -264,6 +266,9 @@ int main(int argc, char** argv) {
 	player_weapon.setModel(&pknight_weapon_model);
 	player_weapon.setTexture(&pknight_weapon_texture);
 	player.setWeapon(player_weapon);
+	Character cube;
+	cube.setModel(&cube_model);
+	cube.setTexture(&container_texture);
 
 	/* pack the characters in a vector, maybe not the best solution for collision detection. Using something more abstract than Character (not only they can collide) would be better */
 	std::vector<Character*> characters = {
@@ -301,6 +306,7 @@ int main(int argc, char** argv) {
 	pknight_weapon_model.pushGPU();
 	goblin_model.pushGPU();
 	goblin_weapon_model.pushGPU();
+	cube_model.pushGPU();
 
 	// scale the bounding boxes. should probably not be here but in an init loop
 	player.getBBox().scale(glm::vec3(0.15f));
@@ -405,6 +411,7 @@ int main(int argc, char** argv) {
 		npc2.animate(1, 39, 0.009f * deltaTime);
 		npc3.animate(40, 45, 0.005f * deltaTime);
 		goblin.animate(40, 45, 0.009f * deltaTime);
+		//cube.animate(1, 1, 0.0f);
 		// ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -421,6 +428,8 @@ int main(int argc, char** argv) {
 		npc3.render();
 		md2Shader.Update(myLight, goblin, camera);
 		goblin.render();
+		//md2Shader.Update(myLight, cube, camera);
+		//cube.render();
 		// ///////////////////////////////////////////////////////////////////////////////
 
 

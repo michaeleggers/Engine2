@@ -41,6 +41,16 @@ void AnimatedEntity::animate(int start, int end, float percent)
 		glBindBuffer(GL_ARRAY_BUFFER, nextVBO);
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
+		// current normals-frame
+		currentNormalsVBO = m_Model_ptr->getNormalVBOs()[currentFrame];
+		glBindBuffer(GL_ARRAY_BUFFER, currentNormalsVBO);
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+		// next normals-frame
+		nextNormalsVBO = m_Model_ptr->getNormalVBOs()[nextFrame];
+		glBindBuffer(GL_ARRAY_BUFFER, nextNormalsVBO);
+		glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
 		// tell what vbo to use for texture coordinates
 		textureVBO = m_Model_ptr->getTextureVBO();
 		glBindBuffer(GL_ARRAY_BUFFER, textureVBO);

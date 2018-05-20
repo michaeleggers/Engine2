@@ -37,6 +37,10 @@ public:
 		glEnableVertexAttribArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, nextVBO);
 		glEnableVertexAttribArray(3);
+		glBindBuffer(GL_ARRAY_BUFFER, currentNormalsVBO);
+		glEnableVertexAttribArray(2);
+		glBindBuffer(GL_ARRAY_BUFFER, nextNormalsVBO);
+		glEnableVertexAttribArray(4);
 		glBindBuffer(GL_ARRAY_BUFFER, textureVBO);
 		glEnableVertexAttribArray(1);
 
@@ -67,6 +71,8 @@ protected:
 	GLuint VAO;
 	GLuint currentVBO;
 	GLuint nextVBO;
+	GLuint currentNormalsVBO;
+	GLuint nextNormalsVBO;
 	GLuint textureVBO;
 
 	// check what animation is active
