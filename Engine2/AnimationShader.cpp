@@ -143,8 +143,8 @@ void AnimationShader::Update(Light& light, AnimatedEntity& model, Camera& camera
 	glUniform1f(m_uniforms[MAT_SHININESS], 16.0f);
 
 	glUniform3f(m_uniforms[LIGHT_POSITION], light.getPosition().x, light.getPosition().y, light.getPosition().z);
-	glUniform3f(m_uniforms[LIGHT_AMBIENT], 1.0, 1.0, 1.0);
-	glUniform3f(m_uniforms[LIGHT_DIFFUSE], 1.0f, 1.0f, 1.0f);
+	glUniform3f(m_uniforms[LIGHT_AMBIENT], 0.2, 0.2, 0.2);
+	glUniform3f(m_uniforms[LIGHT_DIFFUSE], 0.3f, 1.0f, 1.0f);
 	glUniform3f(m_uniforms[LIGHT_SPECULAR], 1.0f, 1.0f, 1.0f);
 
 	// update the interpolation for animating the md2 model

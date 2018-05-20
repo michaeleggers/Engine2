@@ -226,7 +226,6 @@ int main(int argc, char** argv) {
 	/* replace light stuff with light class (no model) */
 	Light myLight(lightPos, glm::vec3(1.0f, 1.0f, 1.0f));
 
-
 	/* load MD2 model */
 	md2Model md2("./models/Tris.MD2", "./textures/Abarlith_32_bpp.png");
 	md2Model pknight_model("./models/pknight/tris.md2");
@@ -399,6 +398,13 @@ int main(int argc, char** argv) {
 		if (player.getState() == DEATH1) {
 			player.animate(178, 183, 0.009f * deltaTime);
 		}
+
+		static float lightPosX = 0.0f;
+		static float lightPosZ = 0.0f;
+		myLight.getPosition().x = sin(lightPosX) * 5.0f;
+		myLight.getPosition().z = sin(lightPosZ) * 5.0f;
+		lightPosX += 0.05f;
+		lightPosZ += 0.05f;
 
 		// AI
 		npc3.setVelocity(0.006f);
