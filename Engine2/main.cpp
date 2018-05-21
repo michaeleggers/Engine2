@@ -201,6 +201,7 @@ int main(int argc, char** argv) {
 
 	Texture faerie_texture("./textures/Faerie.png");
 	Texture pknight_texture("./models/pknight/knight.pcx");
+	Texture pknight_texture_specular("./models/pknight/knight.pcx");
 	Texture bauul_texture("./textures/bauul.png");
 	Texture skelett_texture("./models/skelett/skelett.png");
 	Texture pknight_weapon_texture("./models/pknight/w_railgun.pcx");
@@ -229,6 +230,7 @@ int main(int argc, char** argv) {
 	Character player;
 	player.setModel(&pknight_model);
 	player.setTexture(&pknight_texture, DIFFUSE);
+	player.setTexture(&pknight_texture_specular, SPECULAR);
 
 	/* NPCs */
 	Character npc;
