@@ -25,7 +25,7 @@ Course: Game Programming, COMP 4451, HKUST, Fall Term 2016
 
 #define EPSILON 0.5f;
 
-glm::vec3 camPos = glm::vec3(0.0f, 6.0f, 10.0f);
+glm::vec3 camPos = glm::vec3(0.0f, 8.0f, 10.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 camUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -200,8 +200,8 @@ int main(int argc, char** argv) {
 	AnimationShader md2Shader("./opengl_shaders/md2_animation_shader", shader_variables_md2);
 
 	Texture faerie_texture("./textures/Faerie.png");
-	Texture pknight_texture("./models/pknight/knight.pcx");
-	Texture pknight_texture_specular("./models/pknight/knight.pcx");
+	Texture pknight_texture("./models/pknight/knight.png");
+	Texture pknight_texture_specular("./models/pknight/knight_spec_v03.png");
 	Texture bauul_texture("./textures/bauul.png");
 	Texture skelett_texture("./models/skelett/skelett.png");
 	Texture pknight_weapon_texture("./models/pknight/w_railgun.pcx");
@@ -210,7 +210,7 @@ int main(int argc, char** argv) {
 	Texture container_texture("./textures/container2.png");
 
 	/* position of the light */
-	glm::vec3 lightPos(0.0f, 5.0f, 0.0f);
+	glm::vec3 lightPos(0.0f, 2.0f, 0.0f);
 
 	/* replace light stuff with light class (no model) */
 	Light myLight(lightPos, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -372,11 +372,11 @@ int main(int argc, char** argv) {
 		}
 
 		static float lightPosX = 0.0f;
-		static float lightPosZ = 0.0f;
+		static float lightPosY = 0.0f;
 		myLight.getPosition().x = sin(lightPosX) * 5.0f;
-		myLight.getPosition().z = sin(lightPosZ) * 5.0f;
-		lightPosX += 0.05f;
-		lightPosZ += 0.05f;
+		myLight.getPosition().y = sin(lightPosY) * 5.0f;
+		lightPosX += 0.02f;
+		lightPosY += 0.02f;
 
 		// AI
 		npc3.setVelocity(0.006f);

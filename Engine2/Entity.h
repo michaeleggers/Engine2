@@ -16,7 +16,11 @@ enum TextureType
 class Entity
 {
 public:
-	Entity() : m_Model_ptr(NULL) {}
+	Entity() : m_Model_ptr(NULL)
+	{
+		m_TexturePtr[DIFFUSE] = nullptr;
+		m_TexturePtr[SPECULAR] = nullptr;
+	}
 	virtual ~Entity();
 	virtual void render() {};
 	virtual void setPos(glm::vec3 pos) { m_Transform.pos = pos; }
