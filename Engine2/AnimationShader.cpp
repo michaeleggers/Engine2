@@ -102,7 +102,8 @@ AnimationShader::AnimationShader(const std::string& fileName, const std::vector<
 	// Don't forget to 'use' the corresponding shader program first (to set the uniform) THIS IS ALSO UGLY SINCE NOT EVERY SHADER HAS THIS! (but maybe ok for me :)
 	m_uniforms[VIEWPOS] = glGetUniformLocation(m_program, "viewPos");
 	m_uniforms[MAT_SHININESS] = glGetUniformLocation(m_program, "material.shininess");
-
+	m_uniforms[MAT_DIFFUSE] = glGetUniformLocation(m_program, "diffuseSampler");
+	m_uniforms[MAT_SPECULAR] = glGetUniformLocation(m_program, "specularSampler");
 	m_uniforms[LIGHT_POSITION] = glGetUniformLocation(m_program, "light.position");
 	m_uniforms[LIGHT_AMBIENT] = glGetUniformLocation(m_program, "light.ambient");
 	m_uniforms[LIGHT_DIFFUSE] = glGetUniformLocation(m_program, "light.diffuse");
@@ -139,6 +140,8 @@ void AnimationShader::Update(Light& light, AnimatedEntity& model, Camera& camera
 	glUniform3f(m_uniforms[VIEWPOS], camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 
 	glUniform1f(m_uniforms[MAT_SHININESS], 64.0f);
+	glUniform1i(m_uniforms[MAT_DIFFUSE], 0); // number has to match the used texture unit
+	glUniform1i(m_uniforms[MAT_SPECULAR], 1); // number has to match the used texture unit
 
 	glUniform3f(m_uniforms[LIGHT_POSITION], light.getPosition().x, light.getPosition().y, light.getPosition().z);
 	glUniform3f(m_uniforms[LIGHT_AMBIENT], 0.8, 0.8, 0.8);
