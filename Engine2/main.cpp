@@ -228,32 +228,32 @@ int main(int argc, char** argv) {
 	/* create a REntity, the final representation of any renderable object in the game */
 	Character player;
 	player.setModel(&pknight_model);
-	player.setTexture(&pknight_texture);
+	player.setTexture(&pknight_texture, DIFFUSE);
 
 	/* NPCs */
 	Character npc;
 	npc.setModel(&faerie_model);
-	npc.setTexture(&faerie_texture);
+	npc.setTexture(&faerie_texture, DIFFUSE);
 	Character npc2;
 	npc2.setModel(&bauul_model);
-	npc2.setTexture(&bauul_texture);
+	npc2.setTexture(&bauul_texture, DIFFUSE);
 	Character npc3;
 	npc3.setModel(&skelett_model);
-	npc3.setTexture(&skelett_texture);
+	npc3.setTexture(&skelett_texture, DIFFUSE);
 	Character goblin;
 	goblin.setModel(&goblin_model);
-	goblin.setTexture(&goblin_texture);
+	goblin.setTexture(&goblin_texture, DIFFUSE);
 	Weapon goblin_weapon;
 	goblin_weapon.setModel(&goblin_weapon_model);
-	goblin_weapon.setTexture(&goblin_weapon_texture);
+	goblin_weapon.setTexture(&goblin_weapon_texture, DIFFUSE);
 	goblin.setWeapon(goblin_weapon);
 	Weapon player_weapon;
 	player_weapon.setModel(&pknight_weapon_model);
-	player_weapon.setTexture(&pknight_weapon_texture);
+	player_weapon.setTexture(&pknight_weapon_texture, DIFFUSE);
 	player.setWeapon(player_weapon);
 	Character cube;
-	cube.setModel(&cube_model);
-	cube.setTexture(&container_texture);
+	/*cube.setModel(&cube_model);
+	cube.setTexture(&container_texture);*/
 
 	/* pack the characters in a vector, maybe not the best solution for collision detection. Using something more abstract than Character (not only they can collide) would be better */
 	std::vector<Character*> characters = {
