@@ -49,7 +49,7 @@ void main()
 	vec3 specular =  light.specular * (spec * vec3(texture(diffuseSampler, textureCoordinates))); 
 
 	/* final fragment color */
-	vec3 result = ambient + diffuse;
+	vec3 result = ambient + diffuse + specular;
     color = vec4(result, 1.0f);
 }
 

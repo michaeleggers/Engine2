@@ -83,8 +83,6 @@ AnimationShader::AnimationShader(const std::string& fileName, const std::vector<
 		glBindAttribLocation(m_program, std::distance(variables.begin(), iter), (*iter).c_str());
 	}
 
-
-
 	/* Link our program */
 	/* At this stage, the vertex and fragment programs are inspected, optimized and a binary code is generated for the shader. */
 	/* The binary code is uploaded to the GPU, if there is no error. */
@@ -140,11 +138,11 @@ void AnimationShader::Update(Light& light, AnimatedEntity& model, Camera& camera
 	// probably changed later: shader class should be more flexible for all the attributes...
 	glUniform3f(m_uniforms[VIEWPOS], camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 
-	glUniform1f(m_uniforms[MAT_SHININESS], 16.0f);
+	glUniform1f(m_uniforms[MAT_SHININESS], 64.0f);
 
 	glUniform3f(m_uniforms[LIGHT_POSITION], light.getPosition().x, light.getPosition().y, light.getPosition().z);
-	glUniform3f(m_uniforms[LIGHT_AMBIENT], 0.2, 0.2, 0.2);
-	glUniform3f(m_uniforms[LIGHT_DIFFUSE], 0.3f, 1.0f, 1.0f);
+	glUniform3f(m_uniforms[LIGHT_AMBIENT], 0.8, 0.8, 0.8);
+	glUniform3f(m_uniforms[LIGHT_DIFFUSE], 1.0f, 0.2f, 0.0f);
 	glUniform3f(m_uniforms[LIGHT_SPECULAR], 1.0f, 1.0f, 1.0f);
 
 	// update the interpolation for animating the md2 model

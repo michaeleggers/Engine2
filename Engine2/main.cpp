@@ -195,9 +195,9 @@ void computeAI(Character& character, Character& player) {
 int main(int argc, char** argv) {
 	Display display(1024, 768, "Engine2");
 
-	std::vector<std::string> shader_variables = { "tposition", "texCoord", "normal" };
 	std::vector<std::string> shader_variables_md2 = { "tposition", "texCoord", "normal", "nextVertexFrame", "nextNormalFrame" };
-	AnimationShader shader("./opengl_shaders/basicShader", shader_variables);
+	/* md2 shader for md2 models to animate them */
+	AnimationShader md2Shader("./opengl_shaders/md2_animation_shader", shader_variables_md2);
 
 	Texture faerie_texture("./textures/Faerie.png");
 	Texture pknight_texture("./models/pknight/knight.pcx");
@@ -207,18 +207,6 @@ int main(int argc, char** argv) {
 	Texture goblin_texture("./models/goblin/cathos.pcx");
 	Texture goblin_weapon_texture("./models/goblin/weapon.pcx");
 	Texture container_texture("./textures/container2.png");
-
-	/* creates a shader for objects that will be affected by a light */
-	AnimationShader lightShader("./opengl_shaders/lightTutorialShader", shader_variables);
-
-	/* creates a shader that uses textures on top of the lighting: lightmaps */
-	AnimationShader lightMapShader("./opengl_shaders/lightMapsTutorial", shader_variables);
-	
-	/* shader used for the actual light */
-	AnimationShader light("./opengl_shaders/lampShader", shader_variables);
-
-	/* md2 shader for md2 models to animate them */
-	AnimationShader md2Shader("./opengl_shaders/md2_animation_shader", shader_variables_md2);
 
 	/* position of the light */
 	glm::vec3 lightPos(0.0f, 5.0f, 0.0f);
@@ -237,12 +225,10 @@ int main(int argc, char** argv) {
 	md2Model goblin_weapon_model("./models/goblin/weapon.md2");
 	md2Model cube_model("./models/cube.md2");
 
-
 	/* create a REntity, the final representation of any renderable object in the game */
 	Character player;
 	player.setModel(&pknight_model);
 	player.setTexture(&pknight_texture);
-
 
 	/* NPCs */
 	Character npc;
@@ -279,19 +265,9 @@ int main(int argc, char** argv) {
 		&goblin
 	};
 
-
-
-	// create a camera
 	Camera camera;
 
-	// transform object is the model matrix. transform models with this thing!
-	Transform transform;
-	Transform transform_triangle;
-	Transform transform_light;
-	Transform md2_2_transform;
-
 	bool isClosed = false;
-	//lightMapShader.Bind();
 	//glUniform1i(glGetUniformLocation(lightMapShader.m_program, "diffuseSampler"), 0);
 	//glUniform1i(glGetUniformLocation(lightMapShader.m_program, "specularSampler"), 1);
 	SDL_Event event;
@@ -349,17 +325,12 @@ int main(int argc, char** argv) {
 		processCharacter(player); // update character state based on input
 		// ////////////////////////////////////////////////////////////////////////////////
 		
-
-
-
-
 		// GAME UPDATE ////////////////////////////////////////////////////////////////////
 
 		// calculate new parameters
 		camera.setView(camPos + player.getTransform().pos, player.getTransform().pos, camUp);	// will generate a new lookAt matrix
 
-
-		md2Shader.Bind(); // bind appropriate shader. TODO: pack into function!
+		md2Shader.Bind();
 		// set character facing direction
 		float angle = glm::angle(glm::vec3(1.0f, 0.0f, 0.0f), glm::normalize(player.getDirection()));
 		if (player.getDirection().z > 0) { // for 3rd and 4th quadrants
@@ -372,7 +343,6 @@ int main(int argc, char** argv) {
 			}
 		}
 		player.getTransform().rot.y = angle;
-
 
 		// collision detection. check only for player and one npc for testing purposes, dammit, this part is hard!
 		collisionDetect(characters);
@@ -420,9 +390,6 @@ int main(int argc, char** argv) {
 		//cube.animate(1, 1, 0.0f);
 		// ///////////////////////////////////////////////////////////////////////////////
 
-
-
-
 		// RENDER ////////////////////////////////////////////////////////////////////////
 		md2Shader.Update(myLight, player, camera);
 		player.render();
@@ -437,7 +404,6 @@ int main(int argc, char** argv) {
 		//md2Shader.Update(myLight, cube, camera);
 		//cube.render();
 		// ///////////////////////////////////////////////////////////////////////////////
-
 
 		display.SwapBuffers();
 
