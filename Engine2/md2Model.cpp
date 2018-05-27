@@ -60,9 +60,12 @@ void md2Model::reorganize() {
 			// generate normal for this triangle
 			glm::vec3 x = model.pointList[framenumber * model.numPoints + model.triIndex[j].meshIndex[1]] - model.pointList[framenumber * model.numPoints + model.triIndex[j].meshIndex[0]];
 			glm::vec3 y = model.pointList[framenumber * model.numPoints + model.triIndex[j].meshIndex[2]] - model.pointList[framenumber * model.numPoints + model.triIndex[j].meshIndex[0]];
-			normal_frame.push_back(glm::normalize(glm::cross(x, y)));
-			normal_frame.push_back(glm::normalize(glm::cross(x, y)));
-			normal_frame.push_back(glm::normalize(glm::cross(x, y)));
+			//normal_frame.push_back(glm::normalize(glm::cross(x, y)));
+			//normal_frame.push_back(glm::normalize(glm::cross(x, y)));
+			//normal_frame.push_back(glm::normalize(glm::cross(x, y)));
+			normal_frame.push_back(glm::normalize(model.pointList[framenumber * model.numPoints + model.triIndex[j].meshIndex[0]]));
+			normal_frame.push_back(glm::normalize(model.pointList[framenumber * model.numPoints + model.triIndex[j].meshIndex[1]]));
+			normal_frame.push_back(glm::normalize(model.pointList[framenumber * model.numPoints + model.triIndex[j].meshIndex[2]]));
 
 			if (!textures_reordered) { // only needs to be done once, as every frame uses the same
 				st_ro.push_back(model.st[model.triIndex[j].stIndex[0]]); // coordinate tuple for 1st point of triangle

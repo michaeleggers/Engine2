@@ -25,7 +25,7 @@ Course: Game Programming, COMP 4451, HKUST, Fall Term 2016
 
 #define EPSILON 0.5f;
 
-glm::vec3 camPos = glm::vec3(0.0f, 8.0f, 10.0f);
+glm::vec3 camPos = glm::vec3(0.0f, 3.0f, 12.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 camUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -200,8 +200,8 @@ int main(int argc, char** argv) {
 	AnimationShader md2Shader("./opengl_shaders/md2_animation_shader", shader_variables_md2);
 
 	Texture faerie_texture("./textures/Faerie.png");
-	Texture pknight_texture("./models/pknight/knight.png");
-	Texture pknight_texture_specular("./models/pknight/knight_spec_v03.png");
+	Texture pknight_texture("./models/pknight/knight_diffuse_cheetos_1024.png");
+	Texture pknight_texture_specular("./models/pknight/knight_spec_cheetos_1024.png");
 	Texture bauul_texture("./textures/bauul.png");
 	Texture skelett_texture("./models/skelett/skelett.png");
 	Texture pknight_weapon_texture("./models/pknight/w_railgun.pcx");
