@@ -48,6 +48,33 @@ goblin.setTexture(&goblin_texture);
 goblin_model.pushGPU();
 ```
 
+****Interpolating the model's keyframes on the vertex shader****
+
+Since the md2 format does not store bones but versions of the same
+model in different poses it is necessary to interpolate between these
+keyframes in order to get a smooth animation. This is being done on the
+vertex shader. Two VBOs are bound to OpenGL's state machine holding the
+vertex information of the current and next frame.
+The interpolation on the vertex shader simply looks like that:
+
+```glsl
+#version 140
+
+in vec3 currentFrame;
+in vec3 nextFrame;
+
+...
+
+uniform float interpolation;
+
+void main(){
+
+	vec3 interpolated = currentFrame;
+	if (interpolation >= 0.0f) interpolated += interpolation * (nextFrame - currentFrame);
+	gl_Position = projection * view * transform * vec4(interpolated, 1.0f);
+	...
+}
+```
 
 
 
