@@ -8,6 +8,10 @@ My first ever try using OpenGL in order to learn it in 2016.
 It loads models from .md2 files and animates the model's keyframes via linear interpolation on the GPU
 and features a simple phong lighting model.
 
+***Building***
+
+The project was updated to VS 2017 and will build for x86.
+
 ***Controls***
 
 |Keyboard   |Action                                       |
@@ -24,12 +28,27 @@ and features a simple phong lighting model.
 |           |game cam: run left                           |
 |D          |free cam: strave right                       | 
 |           |game cam: run right                          |
+|Space      |heroine swings her sword    				  |
+
+***Code Overview***
+
+****Loading models****
+
+The program uses the md2 file format (from id's Quake 2) to draw animated
+meshes. The following steps will create such a model ready for rendering:
+
+```C++
+Texture goblin_texture("./models/goblin/cathos.pcx");
+md2Model goblin_model("./models/goblin/tris.md2");
+
+Character goblin;
+goblin.setModel(&goblin_model);
+goblin.setTexture(&goblin_texture);
+
+goblin_model.pushGPU();
+```
 
 
-
-***Building***
-
-The project was updated to VS 2017 and will build for x86.
 
 
 ***What it does***
