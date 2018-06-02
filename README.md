@@ -37,7 +37,7 @@ The project was updated to VS 2017 and will build for x86.
 The program uses the md2 file format (from id's Quake 2) to draw animated
 meshes. The following steps will create such a model ready for rendering:
 
-```C++
+```Cpp
 Texture goblin_texture("./models/goblin/cathos.pcx");
 md2Model goblin_model("./models/goblin/tris.md2");
 
