@@ -80,5 +80,10 @@ void main(){
 
 
 
-***What it does***
+***Some impressions***
+
+NPCs follow the character (but they don't actually hurt them... yet)
 ![alt text](https://github.com/michaeleggers/Engine2/blob/master/Engine2%202016-11-29%2010-58-18-29.gif "engine in action")
+
+Hero is a heroine in the most recent version and loves hot cheetos!
+![alt text](https://github.com/michaeleggers/Engine2/blob/master/heroine3.gif "phong illumination model")
