@@ -25,7 +25,7 @@ Course: Game Programming, COMP 4451, HKUST, Fall Term 2016
 
 #define EPSILON 0.5f;
 
-glm::vec3 gameCamPos = glm::vec3(0.0f, 0.0f, 30.0f);
+glm::vec3 gameCamPos = glm::vec3(0.0f, 4.0f, 10.0f);
 glm::vec3 gameCamFront = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 gameCamUp = glm::vec3(0.0f, 1.0f, 0.0f);
 

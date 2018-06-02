@@ -38,6 +38,7 @@ The program uses the md2 file format (from id's Quake 2) to draw animated
 meshes. The following steps will create such a model ready for rendering:
 
 ```Cpp
+// excerpt of main.cpp
 Texture goblin_texture("./models/goblin/cathos.pcx");
 md2Model goblin_model("./models/goblin/tris.md2");
 
@@ -58,6 +59,7 @@ vertex information of the current and next frame.
 The interpolation on the vertex shader simply looks like that:
 
 ```glsl
+// excerpt of md2_animation_shader.vs
 #version 140
 
 in vec3 currentFrame;
