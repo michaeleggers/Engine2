@@ -25,9 +25,16 @@ Course: Game Programming, COMP 4451, HKUST, Fall Term 2016
 
 #define EPSILON 0.5f;
 
-glm::vec3 camPos = glm::vec3(0.0f, 3.0f, 12.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 camUp = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 gameCamPos = glm::vec3(0.0f, 0.0f, 30.0f);
+glm::vec3 gameCamFront = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 gameCamUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+glm::vec3 freeCamPos = glm::vec3(0.0f, 0.0f, 30.0f);
+glm::vec3 freeCamFront = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 freeCamUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+static Camera globalCam;
+static unsigned int activeCam = 1; // 1: game cam, 2: free cam
 
 // pitch and yaw
 GLfloat pitch = 0.0f;
@@ -47,35 +54,35 @@ bool animIsRunning = false;	// check if animation is currently running
 unsigned int keycodes[SDL_NUM_SCANCODES];
 
 // function that moves the camera
-void doMovement() {
-	// pitch
+void processCamera() {
 	if (keycodes[SDL_SCANCODE_W]) {
-		camPos += cameraFront * deltaTime * 0.005f;
+		freeCamPos += direction * deltaTime * 0.05f;
 	}
 	if (keycodes[SDL_SCANCODE_S]) {
-		camPos -= cameraFront * deltaTime * 0.005f;
+		freeCamPos -= direction * deltaTime * 0.05f;
 	}
 	if (keycodes[SDL_SCANCODE_A]) {
-		camPos -= glm::normalize(glm::cross(cameraFront, camUp)) * deltaTime * 0.005f;
+		freeCamPos -= glm::normalize(glm::cross(direction, freeCamUp)) * deltaTime * 0.05f;
 	}
 	if (keycodes[SDL_SCANCODE_D]) {
-		camPos += glm::normalize(glm::cross(cameraFront, camUp)) * deltaTime * 0.005f;
+		freeCamPos += glm::normalize(glm::cross(direction, freeCamUp)) * deltaTime * 0.05f;
 	}
-	if (keycodes[SDL_SCANCODE_I]) {
+	// pitch
+	if (keycodes[SDL_SCANCODE_UP]) {
 		pitch += 0.05f * deltaTime;
 		if (pitch > 89.0f)
 			pitch = 89.0f;
 	}
-	if (keycodes[SDL_SCANCODE_K]) {
+	if (keycodes[SDL_SCANCODE_DOWN]) {
 		pitch -= 0.05f * deltaTime;
 		if (pitch < -89.0f)
 			pitch = -89.0f;
 	}
 	// yaw
-	if (keycodes[SDL_SCANCODE_J]) {
+	if (keycodes[SDL_SCANCODE_LEFT]) {
 		yaw -= 0.05f * deltaTime;
 	}
-	if (keycodes[SDL_SCANCODE_L]) {
+	if (keycodes[SDL_SCANCODE_RIGHT]) {
 		yaw += 0.05f * deltaTime;
 	}
 
@@ -89,22 +96,22 @@ void processCharacter(Character& character) {
 	bool keyHit = false;
 	glm::vec3 newDirection(0.0f, 0.0f, 0.0f);
 
-	if (keycodes[SDL_SCANCODE_H]) {							// right
+	if (keycodes[SDL_SCANCODE_D]) {							// right
 		character.setAnimationState(RUN);
 		newDirection += glm::vec3(1.0f, 0.0f, 0.0f);
 		keyHit = true;
 	}
-	if (keycodes[SDL_SCANCODE_F]) {							// left
+	if (keycodes[SDL_SCANCODE_A]) {							// left
 		character.setAnimationState(RUN);
 		newDirection += glm::vec3(-1.0f, 0.0f, 0.0f);
 		keyHit = true;
 	}
-	if (keycodes[SDL_SCANCODE_T]) {							// forward
+	if (keycodes[SDL_SCANCODE_W]) {							// forward
 		character.setAnimationState(RUN);
 		newDirection += glm::vec3(0.0f, 0.0f, -1.0f);
 		keyHit = true;
 	}
-	if (keycodes[SDL_SCANCODE_G]) {							// backwards
+	if (keycodes[SDL_SCANCODE_S]) {							// backwards
 		character.setAnimationState(RUN);
 		newDirection += glm::vec3(0.0f, 0.0f, 1.0f);
 		keyHit = true;
@@ -267,7 +274,8 @@ int main(int argc, char** argv) {
 		&goblin
 	};
 
-	Camera camera;
+	Camera gameCam;
+	Camera freeCam;
 
 	bool isClosed = false;
 	//glUniform1i(glGetUniformLocation(lightMapShader.m_program, "diffuseSampler"), 0);
@@ -317,20 +325,32 @@ int main(int argc, char** argv) {
 				isClosed = true;
 			if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 				isClosed = true;
+			if (event.key.keysym.scancode == SDL_SCANCODE_1)
+				activeCam = 1;
+			if (event.key.keysym.scancode == SDL_SCANCODE_2)
+				activeCam = 2;
 			if (event.type == SDL_KEYDOWN)
 				keycodes[event.key.keysym.scancode] = 1;
 			if (event.type == SDL_KEYUP)
 				keycodes[event.key.keysym.scancode] = 0;
 		}
-
-		doMovement();			  // camera movement
-		processCharacter(player); // update character state based on input
 		// ////////////////////////////////////////////////////////////////////////////////
 		
 		// GAME UPDATE ////////////////////////////////////////////////////////////////////
 
 		// calculate new parameters
-		camera.setView(camPos + player.getTransform().pos, player.getTransform().pos, camUp);	// will generate a new lookAt matrix
+		freeCam.setView(freeCamPos, freeCamPos + direction, freeCamUp);
+		gameCam.setView(gameCamPos + player.getTransform().pos, player.getTransform().pos, gameCamUp);	// will generate a new lookAt matrix
+		if (activeCam == 1)
+		{
+			processCharacter(player); // update character state based on input
+			globalCam = gameCam;
+		}
+		if (activeCam == 2)
+		{
+			processCamera();			  // camera movement input
+			globalCam = freeCam;
+		}
 
 		md2Shader.Bind();
 		// set character facing direction
@@ -393,15 +413,15 @@ int main(int argc, char** argv) {
 		// ///////////////////////////////////////////////////////////////////////////////
 
 		// RENDER ////////////////////////////////////////////////////////////////////////
-		md2Shader.Update(myLight, player, camera);
+		md2Shader.Update(myLight, player, globalCam);
 		player.render();
-		md2Shader.Update(myLight, npc, camera);
+		md2Shader.Update(myLight, npc, globalCam);
 		npc.render();
-		md2Shader.Update(myLight, npc2, camera);
+		md2Shader.Update(myLight, npc2, globalCam);
 		npc2.render();
-		md2Shader.Update(myLight, npc3, camera);
+		md2Shader.Update(myLight, npc3, globalCam);
 		npc3.render();
-		md2Shader.Update(myLight, goblin, camera);
+		md2Shader.Update(myLight, goblin, globalCam);
 		goblin.render();
 		//md2Shader.Update(myLight, cube, camera);
 		//cube.render();
