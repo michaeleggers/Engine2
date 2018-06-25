@@ -35,6 +35,7 @@ glm::vec3 freeCamUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 static Camera globalCam;
 static unsigned int activeCam = 1; // 1: game cam, 2: free cam
+static unsigned int activeSubroutine = 0; // 0: standard, 1: red, 2: cyan
 
 // pitch and yaw
 GLfloat pitch = 0.0f;
@@ -132,7 +133,10 @@ void processCharacter(Character& character) {
 
 void processRenderOptions() {
 	if (keycodes[SDL_SCANCODE_3]) {
-		printf("Toggled render-options\n");
+		activeSubroutine++;
+		if (activeSubroutine > 2) activeSubroutine = 0;
+		printf("active subroutine: %d\n", activeSubroutine);
+		keycodes[SDL_SCANCODE_3] = 0;
 	}
 }
 
@@ -420,6 +424,23 @@ int main(int argc, char** argv) {
 		// ///////////////////////////////////////////////////////////////////////////////
 
 		// RENDER ////////////////////////////////////////////////////////////////////////
+
+		// some GLSL subroutine stuff right here for now. put elsewhere later!
+		GLuint standardIndex = glGetSubroutineIndex(md2Shader.m_program, GL_FRAGMENT_SHADER, "standard"); // this can be done once, actually!
+		GLuint redIndex = glGetSubroutineIndex(md2Shader.m_program, GL_FRAGMENT_SHADER, "red"); // this can be done once, actually!
+		GLuint cyanIndex = glGetSubroutineIndex(md2Shader.m_program, GL_FRAGMENT_SHADER, "cyan"); // this can be done once, actually!
+
+		switch (activeSubroutine)
+		{
+		case 0: glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &standardIndex);
+			break;
+		case 1: glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &redIndex);
+			break;
+		case 2: glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &cyanIndex);
+			break;
+		default: glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &standardIndex);
+		}
+
 		md2Shader.Update(myLight, player, globalCam);
 		player.render();
 		md2Shader.Update(myLight, npc, globalCam);

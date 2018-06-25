@@ -1,4 +1,4 @@
-#version 140
+#version 450
 
 uniform sampler2D diffuseSampler;
 uniform sampler2D specularSampler;
@@ -35,8 +35,7 @@ void main()
 	color = Color();
 }
 
-subroutine(RenderType) 
-vec4 standard()
+subroutine(RenderType) vec4 standard()
 {
 		/* ambient */
 	//float ambientStrength = 1.0f; 
@@ -58,4 +57,14 @@ vec4 standard()
 	/* final fragment color */
 	vec3 result = ambient + diffuse + specular;
     return vec4(result, 1.0f);
+}
+
+subroutine(RenderType) vec4 cyan()
+{
+    return vec4(0.0f, 1.0f, 1.0f, 1.0f) * standard();
+}
+
+subroutine(RenderType) vec4 red()
+{
+    return vec4(1.0f, 0.0f, 0.0f, 1.0f) * standard();
 }
