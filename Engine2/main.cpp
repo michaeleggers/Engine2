@@ -440,7 +440,23 @@ int main(int argc, char** argv) {
 			break;
 		default: glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &standardIndex);
 		}
+		
+		// TODO(Michael): mask channels twice with red/cyan and render the scene. make this part more neat!
+		glColorMask(false, true, true, false); // red part
+		md2Shader.Update(myLight, player, globalCam);
+		player.render();
+		md2Shader.Update(myLight, npc, globalCam);
+		npc.render();
+		md2Shader.Update(myLight, npc2, globalCam);
+		npc2.render();
+		md2Shader.Update(myLight, npc3, globalCam);
+		npc3.render();
+		md2Shader.Update(myLight, goblin, globalCam);
+		goblin.render();
 
+		glClear(GL_DEPTH_BUFFER_BIT); // why is this needed?!
+
+		glColorMask(true, false, false, false); // cyan part
 		md2Shader.Update(myLight, player, globalCam);
 		player.render();
 		md2Shader.Update(myLight, npc, globalCam);
@@ -453,9 +469,11 @@ int main(int argc, char** argv) {
 		goblin.render();
 		//md2Shader.Update(myLight, cube, camera);
 		//cube.render();
-		// ///////////////////////////////////////////////////////////////////////////////
+
+		glColorMask(true, true, true, true);
 
 		display.SwapBuffers();
+		// ///////////////////////////////////////////////////////////////////////////////
 
 		// compute new delta time
 		GLfloat currentFrame = SDL_GetTicks();
