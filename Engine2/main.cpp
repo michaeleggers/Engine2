@@ -130,6 +130,12 @@ void processCharacter(Character& character) {
 	character.setDirection(newDirection);
 }
 
+void processRenderOptions() {
+	if (keycodes[SDL_SCANCODE_3]) {
+		printf("Toggled render-options\n");
+	}
+}
+
 /* checks each Character in the scene if it is bumping into something. */
 void collisionDetect(std::vector<Character*> entities) {
 	for (int i = 0; i < entities.size(); ++i) {
@@ -351,6 +357,7 @@ int main(int argc, char** argv) {
 			processCamera();			  // camera movement input
 			globalCam = freeCam;
 		}
+		processRenderOptions();
 
 		md2Shader.Bind();
 		// set character facing direction

@@ -27,11 +27,18 @@ in vec2 textureCoordinates;
 
 out vec4 color;
 
-
+subroutine vec4 RenderType();
+subroutine uniform RenderType Color;
 
 void main()
 {
-	/* ambient */
+	color = Color();
+}
+
+subroutine(RenderType) 
+vec4 standard()
+{
+		/* ambient */
 	//float ambientStrength = 1.0f; 
 	vec3 ambient = light.ambient * vec3(texture(diffuseSampler, textureCoordinates)); // Ia
 
@@ -50,6 +57,5 @@ void main()
 
 	/* final fragment color */
 	vec3 result = ambient + diffuse + specular;
-    color = vec4(result, 1.0f);
+    return vec4(result, 1.0f);
 }
-
