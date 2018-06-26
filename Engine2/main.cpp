@@ -16,6 +16,7 @@ Course: Game Programming, COMP 4451, HKUST, Fall Term 2016
 #include "Texture.h"
 #include "Transform.h"
 #include "Camera.h"
+#include "StereoRig.h"
 #include "Light.h"
 #include "ObjLoader.h"
 #include "ObjLoader2.h"
@@ -286,6 +287,8 @@ int main(int argc, char** argv) {
 
 	Camera gameCam;
 	Camera freeCam;
+	StereoRig stereoCam;
+	stereoCam.iod = 0.2f;
 
 	bool isClosed = false;
 	//glUniform1i(glGetUniformLocation(lightMapShader.m_program, "diffuseSampler"), 0);
@@ -350,6 +353,7 @@ int main(int argc, char** argv) {
 
 		// calculate new parameters
 		freeCam.setView(freeCamPos, freeCamPos + direction, freeCamUp);
+		stereoCam.setView(freeCamPos, freeCamPos + direction, freeCamUp);
 		gameCam.setView(gameCamPos + player.getTransform().pos, player.getTransform().pos, gameCamUp);	// will generate a new lookAt matrix
 		if (activeCam == 1)
 		{
@@ -443,29 +447,29 @@ int main(int argc, char** argv) {
 		
 		// TODO(Michael): mask channels twice with red/cyan and render the scene. make this part more neat!
 		glColorMask(false, true, true, false); // red part
-		md2Shader.Update(myLight, player, globalCam);
+		md2Shader.Update(myLight, player, stereoCam.left);
 		player.render();
-		md2Shader.Update(myLight, npc, globalCam);
+		md2Shader.Update(myLight, npc, stereoCam.left);
 		npc.render();
-		md2Shader.Update(myLight, npc2, globalCam);
+		md2Shader.Update(myLight, npc2, stereoCam.left);
 		npc2.render();
-		md2Shader.Update(myLight, npc3, globalCam);
+		md2Shader.Update(myLight, npc3, stereoCam.left);
 		npc3.render();
-		md2Shader.Update(myLight, goblin, globalCam);
+		md2Shader.Update(myLight, goblin, stereoCam.left);
 		goblin.render();
 
 		glClear(GL_DEPTH_BUFFER_BIT); // why is this needed?!
 
 		glColorMask(true, false, false, false); // cyan part
-		md2Shader.Update(myLight, player, globalCam);
+		md2Shader.Update(myLight, player, stereoCam.right);
 		player.render();
-		md2Shader.Update(myLight, npc, globalCam);
+		md2Shader.Update(myLight, npc, stereoCam.right);
 		npc.render();
-		md2Shader.Update(myLight, npc2, globalCam);
+		md2Shader.Update(myLight, npc2, stereoCam.right);
 		npc2.render();
-		md2Shader.Update(myLight, npc3, globalCam);
+		md2Shader.Update(myLight, npc3, stereoCam.right);
 		npc3.render();
-		md2Shader.Update(myLight, goblin, globalCam);
+		md2Shader.Update(myLight, goblin, stereoCam.right);
 		goblin.render();
 		//md2Shader.Update(myLight, cube, camera);
 		//cube.render();
