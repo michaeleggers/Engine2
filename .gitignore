@@ -20,7 +20,7 @@
 [Bb]uild/
 bld/
 [Bb]in/
-#[Oo]bj/
+[Oo]bj/
 /*/Debug
 /*/Release
 
@@ -51,7 +51,7 @@ artifacts/
 *_i.h
 *.ilk
 *.meta
-*.obj
+#*.obj
 *.pch
 *.pdb
 *.pgc
