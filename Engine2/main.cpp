@@ -244,6 +244,9 @@ int main(int argc, char** argv) {
 	md2Model goblin_weapon_model("./models/goblin/weapon.md2");
 	md2Model cube_model("./models/cube.md2");
 
+	ObjLoader2 objModel("./models/cube.obj");
+	std::cout << objModel << std::endl;
+
 	/* create a REntity, the final representation of any renderable object in the game */
 	Character player;
 	player.setModel(&pknight_model);

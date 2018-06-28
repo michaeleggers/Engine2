@@ -15,9 +15,9 @@ public:
 
 	void pushGPU();
 	void displayMD2(int frameNumber);
-	void animate(int start, int end, float interpolation);
+	void animate(int start, int end, float interpolation); // obsolete
 	void bind_texture(int texture_slot);
-	void displayMD2();
+	void displayMD2(); // obsolete
 
 	modelData_t& getModelData() { return model; }
 
