@@ -150,3 +150,8 @@ void AnimationShader::Update(Light& light, AnimatedEntity& model, Camera& camera
 	// update the interpolation for animating the md2 model
 	glUniform1f(m_uniforms[MD2_INTERPOLATION], model.getInterpol());
 }
+
+void AnimationShader::Update(Light & light, ObjLoader2 & model, Camera & camera)
+{
+	// TODO(Michael): implement
+}

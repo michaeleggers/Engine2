@@ -12,6 +12,7 @@
 #include "Mesh.h"
 #include "md2Model.h"
 #include "AnimatedEntity.h"
+#include "ObjLoader2.h"
 
 class AnimationShader
 {
@@ -22,6 +23,7 @@ public:
 	void Bind();
 	virtual ~AnimationShader();
 	void Update(Light& light, AnimatedEntity& model, Camera& camera = Camera());
+	void Update(Light& light, ObjLoader2& model, Camera& camera = Camera()); // janky!
 	GLuint m_program;
 
 private:
