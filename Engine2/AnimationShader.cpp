@@ -11,7 +11,6 @@
 #include "Camera.h"
 #include "AnimatedEntity.h"
 
-
 std::string AnimationShader::LoadShader(const std::string& fileName)
 {
 	std::ifstream file;
@@ -151,4 +150,3 @@ void AnimationShader::Update(Light& light, AnimatedEntity& model, Camera& camera
 	// update the interpolation for animating the md2 model
 	glUniform1f(m_uniforms[MD2_INTERPOLATION], model.getInterpol());
 }
-

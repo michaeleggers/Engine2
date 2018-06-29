@@ -216,6 +216,10 @@ int main(int argc, char** argv) {
 	std::vector<std::string> shader_variables_md2 = { "tposition", "texCoord", "normal", "nextVertexFrame", "nextNormalFrame" };
 	/* md2 shader for md2 models to animate them */
 	AnimationShader md2Shader("./opengl_shaders/md2_animation_shader", shader_variables_md2);
+	
+	/* shader for obj models. */
+	std::vector<std::string> shader_variables_obj = { "tposition", "texCoord" };
+	AnimationShader objShader("./opengl_shaders/basicShader", shader_variables_obj);
 
 	Texture faerie_texture("./textures/Faerie.png");
 	Texture pknight_texture("./models/pknight/knight_diffuse_cheetos_1024.png");
@@ -244,6 +248,7 @@ int main(int argc, char** argv) {
 	md2Model goblin_weapon_model("./models/goblin/weapon.md2");
 	md2Model cube_model("./models/cube.md2");
 
+	/* OBJ model loading and debug info */
 	ObjLoader2 objModel("./models/cube.obj");
 	std::cout << objModel << std::endl;
 
