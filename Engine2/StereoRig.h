@@ -20,7 +20,7 @@ public:
 			iod * leftCamSide + camTarget,
 					 camUp);
 		right.setView(camPos + iod * rightCamSide,
-			iod * rightCamSide + camTarget,
+		    iod * rightCamSide + camTarget,
 			camUp);
 		pos = camPos;
 	}

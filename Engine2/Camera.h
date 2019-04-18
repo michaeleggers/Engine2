@@ -21,7 +21,7 @@ public:
 	glm::mat4 &getView() { return view; }
 
 	glm::mat4 &getProjection() { return projection; }
-
+	
 	glm::vec3 &getPosition() { return camPosition; }
 
 private:

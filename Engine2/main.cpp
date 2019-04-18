@@ -296,7 +296,7 @@ int main(int argc, char** argv) {
 	Camera gameCam;
 	Camera freeCam;
 	StereoRig stereoCam;
-	stereoCam.iod = 0.2f;
+	stereoCam.iod = 0.9f;
 
 	bool isClosed = false;
 	//glUniform1i(glGetUniformLocation(lightMapShader.m_program, "diffuseSampler"), 0);
