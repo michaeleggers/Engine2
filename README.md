@@ -10,7 +10,25 @@ and features a simple phong lighting model.
 
 ***Building***
 
-The project was updated to VS 2017 and will build for x86.
+- **Windows**:  
+  The project was updated to VS 2017 and will build for x86.
+
+- **MacOS**:  
+  To build on MacOS install **SDL2**, **SDL2_image** and **GLEW** via brew and create Makefile with CMake.  
+  From within the repo-root dir do:
+  ```bash
+  brew install sdl2 sdl2_image glew
+  mkdir build && cd build
+  cmake -DCMAKE_CXX_COMPILER=clang++ ..
+  cmake --build .
+  cd ..
+  cp -R Engine2/textures Engine2/opengl_shaders Engine2/models bin/
+  ```
+  Then start the program with:
+  ```bash
+  cd bin/
+  ./Engine2
+  ```
 
 ***Controls***
 
@@ -87,3 +105,7 @@ NPCs follow the character (but they don't actually hurt them... yet)
 
 Hero is a heroine in the most recent version and loves hot cheetos!
 ![alt text](https://github.com/michaeleggers/Engine2/blob/master/heroine3.gif "phong illumination model")
+
+***Changelog***
+
+Sep. 15, 2025: Add CMakeLists file. Fix some const-problems. Set correct GLSL version in shader. Now runs on MacOS AppleSilicon.
