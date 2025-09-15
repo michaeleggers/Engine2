@@ -1,4 +1,4 @@
-#version 140
+#version 150
 
 in vec2 texCoord0; // retrieve from previous rendering stage
 uniform sampler2D sampler;

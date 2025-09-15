@@ -1,4 +1,4 @@
-#version 140
+#version 150
 
 uniform sampler2D diffuseSampler;
 uniform sampler2D specularSampler;

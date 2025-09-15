@@ -1,4 +1,4 @@
-#version 140
+#version 150
 
 in vec3 tposition; // name matches string in shader pgm
 in vec2 texCoord;  // name matches string in shader pgm, used again here!

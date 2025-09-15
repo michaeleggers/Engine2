@@ -1,4 +1,4 @@
-#version 140
+#version 150
 
 out vec2 texCoord0; // out: pass data to next render stage (fragment shader)
 
