@@ -29,6 +29,13 @@ and features a simple phong lighting model.
   cd bin/
   ./Engine2
   ```
+- **Linux**:
+  Use package manager of your distro to get **SDL2-devel**, **SDL2_image-devel** and **GLEW-devel**.  
+  Eg on Fedora:
+  ```bash
+  sudo dnf install sdl2-devel sdl2_image-devel glew-devel
+  ```
+  Then do the same thing as for MacOS.
 
 ***Controls***
 
@@ -108,4 +115,5 @@ Hero is a heroine in the most recent version and loves hot cheetos!
 
 ***Changelog***
 
+Sep. 16, 2025: Make compile & run on Linux Fedora 42.
 Sep. 15, 2025: Add CMakeLists file. Fix some const-problems. Set correct GLSL version in shader. Now runs on MacOS AppleSilicon.
