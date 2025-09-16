@@ -36,6 +36,7 @@ target_include_directories(Engine2 PUBLIC
 target_link_libraries(Engine2
     PUBLIC -lc
     PUBLIC -lm
+    PRIVATE -lGL
     PRIVATE SDL2::SDL2
     PRIVATE SDL2_image::SDL2_image
     PRIVATE GLEW::GLEW
