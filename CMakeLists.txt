@@ -33,6 +33,7 @@ target_include_directories(Engine2 PUBLIC
     ./Engine2/include/
 )
 
+if(UNIX AND NOT APPLE)
 target_link_libraries(Engine2
     PUBLIC -lc
     PUBLIC -lm
@@ -41,5 +42,14 @@ target_link_libraries(Engine2
     PRIVATE SDL2_image::SDL2_image
     PRIVATE GLEW::GLEW
 )
+else()
+target_link_libraries(Engine2
+    PUBLIC -lc
+    PUBLIC -lm
+    PRIVATE SDL2::SDL2
+    PRIVATE SDL2_image::SDL2_image
+    PRIVATE GLEW::GLEW
+)
+endif()
 
 
